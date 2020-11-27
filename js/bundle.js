@@ -60,6 +60,78 @@ triggersParent.addEventListener('click', function(event) {
 
 /***/ }),
 
+/***/ "./js/modules/timer.js":
+/*!*****************************!*\
+  !*** ./js/modules/timer.js ***!
+  \*****************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+function timer(selector, endtime) {
+
+    function getTimeDifference(endtime) {
+        const t = Date.parse(endtime) - Date.parse(new Date());
+        const days = Math.floor(t / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((t / (1000 * 60 * 60) % 24));
+        const minutes = Math.floor((t / 1000 / 60) % 60);
+        const seconds = Math.floor((t / 1000) % 60);
+
+        return {
+            t,
+            days,
+            hours,
+            minutes,
+            seconds
+        };
+    }
+
+    function getZero(number) {
+        if (number >= 0 && number < 10) {
+            return `0${number}`;
+        } else {
+            return number;
+        }
+    }
+
+    function setClock(selector, endtime) {
+        const timer = document.querySelector(selector);
+        const days = timer.querySelector('#days');
+        const hours = timer.querySelector('#hours');
+        const minutes = timer.querySelector('#minutes');
+        const seconds = timer.querySelector('#seconds');
+        const interval = setInterval(updateClock, 1000);
+
+        updateClock();
+
+        function updateClock() {
+            const t = getTimeDifference(endtime);
+            days.innerHTML = getZero(t.days);
+            hours.innerHTML = getZero(t.hours);
+            minutes.innerHTML = getZero(t.minutes);
+            seconds.innerHTML = getZero(t.seconds);
+
+            if (t <= 0) {
+                clearInterval(interval);
+            }
+        }
+
+    }
+
+    setClock(selector, endtime);
+
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (timer);
+
+/***/ }),
+
 /***/ "./js/script.js":
 /*!**********************!*\
   !*** ./js/script.js ***!
@@ -71,9 +143,12 @@ triggersParent.addEventListener('click', function(event) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/tabs */ "./js/modules/tabs.js");
+/* harmony import */ var _modules_timer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/timer */ "./js/modules/timer.js");
+
 
 
 (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_0__.default)();
+(0,_modules_timer__WEBPACK_IMPORTED_MODULE_1__.default)('.timer', '2020-12-31');
 
 /***/ })
 
