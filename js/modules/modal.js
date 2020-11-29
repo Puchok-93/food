@@ -2,7 +2,7 @@ function modal() {
     const modalTriggers = document.querySelectorAll('[data-modal]');
     const modal = document.querySelector('.modal');
     const modalCloseButton = document.querySelector('[data-close]');
-    const timerID = setInterval(openModal, 3000);
+    const timerID = setInterval(openModal, 300000);
 
     function openModal() {
         modal.classList.add('show');
