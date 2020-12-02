@@ -20,7 +20,7 @@ function modal() {
     const modalTriggers = document.querySelectorAll('[data-modal]');
     const modal = document.querySelector('.modal');
     const modalCloseButton = document.querySelector('[data-close]');
-    const timerID = setInterval(openModal, 3000);
+    const timerID = setInterval(openModal, 300000);
 
     function openModal() {
         modal.classList.add('show');
@@ -66,6 +66,147 @@ function modal() {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (modal);
+
+/***/ }),
+
+/***/ "./js/modules/slider.js":
+/*!******************************!*\
+  !*** ./js/modules/slider.js ***!
+  \******************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+function slider() {
+    const slider = document.querySelector('.offer__slider');
+    const sliderWrapper = document.querySelector('.offer__slider-wrapper');
+    const sliderInnerWrapper = sliderWrapper.querySelector('.offer__slider-inner');
+    const slides = document.querySelectorAll('.offer__slide');
+    const nextSlideButton = document.querySelector('.offer__slider-next');
+    const prevSlideButton = document.querySelector('.offer__slider-prev');
+    const currentSlide = document.querySelector('#current');
+    const totalSlide = document.querySelector('#total');
+    const widthSlide = window.getComputedStyle(sliderWrapper).width;
+    let slideIndex = 1;
+    let offset = 0;
+
+
+    if (slides.length < 10) {
+        totalSlide.textContent = `0${slides.length}`;
+        currentSlide.textContent =  `0${slideIndex}`;
+    } else {
+        totalSlide.textContent = slides.length;
+        currentSlide.textContent =  slideIndex;
+    }
+
+    sliderInnerWrapper.style.width = 100 * slides.length + '%';
+    slides.forEach(slide => {
+        slide.style.width = widthSlide;
+    });
+
+    function showNextSlide() {
+        if (offset == +widthSlide.slice(0, widthSlide.length - 2) * (slides.length - 1)) {
+            offset = 0;
+        } else {
+            offset += +widthSlide.slice(0, widthSlide.length - 2);
+        }
+
+        if (slideIndex == slides.length) {
+            slideIndex = 1;
+        } else {
+            slideIndex++;
+        }
+
+        if (slides.length < 10) {
+            currentSlide.textContent = `0${slideIndex}`;
+        } else {
+            currentSlide.textContent = slideIndex;
+        }
+
+        dots.forEach(dot => {
+            dot.classList.remove('dot__active');
+        });
+        dots[slideIndex - 1].classList.add('dot__active');
+
+        sliderInnerWrapper.style.transform = `translateX(-${offset}px)`;
+    }
+
+    function showPrevSlide() {
+        if (offset == 0) {
+            offset = +widthSlide.slice(0, widthSlide.length - 2) * (slides.length - 1);
+        } else {
+            offset -= +widthSlide.slice(0, widthSlide.length - 2);
+        }
+
+        if (slideIndex == 1) {
+            slideIndex = slides.length;
+        } else {
+            slideIndex--;
+        }
+
+        if (slides.length < 10) {
+            currentSlide.textContent = `0${slideIndex}`;
+        } else {
+            currentSlide.textContent = slideIndex;
+        }
+
+        dots.forEach(dot => {
+            dot.classList.remove('dot__active');
+        });
+        dots[slideIndex - 1].classList.add('dot__active');
+
+        sliderInnerWrapper.style.transform = `translateX(-${offset}px)`;
+    }
+
+    const indicators = document.createElement('ol');
+    const dots = [];
+    indicators.classList.add('carousel-indicators');
+    slider.append(indicators);
+
+    for (let i = 0; i < slides.length; i++) {
+        const dot = document.createElement('li');
+        dot.setAttribute('data-slide-to', i + 1);
+        dot.classList.add('dot');
+        indicators.append(dot);
+
+        if (i == 0) {
+            dot.classList.add('dot__active');
+        }
+
+        dots.push(dot);
+    };
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+            const slideTo = e.target.getAttribute('data-slide-to');
+            slideIndex = slideTo;
+            offset = +widthSlide.slice(0, widthSlide.length - 2) * (slideTo - 1);
+            sliderInnerWrapper.style.transform = `translateX(-${offset}px)`;
+
+            if (slides.length < 10) {
+                currentSlide.textContent = `0${slideIndex}`;
+            } else {
+                currentSlide.textContent = slideIndex;
+            }
+            
+            dots.forEach(dot => {
+                dot.classList.remove('dot__active');
+            });
+            dots[slideIndex - 1].classList.add('dot__active');
+        });
+    });
+
+    nextSlideButton.addEventListener('click', showNextSlide);
+    prevSlideButton.addEventListener('click', showPrevSlide);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (slider);
 
 /***/ }),
 
@@ -212,6 +353,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/tabs */ "./js/modules/tabs.js");
 /* harmony import */ var _modules_timer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/timer */ "./js/modules/timer.js");
 /* harmony import */ var _modules_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/modal */ "./js/modules/modal.js");
+/* harmony import */ var _modules_slider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/slider */ "./js/modules/slider.js");
+
 
 
 
@@ -219,6 +362,7 @@ __webpack_require__.r(__webpack_exports__);
 (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_0__.default)();
 (0,_modules_timer__WEBPACK_IMPORTED_MODULE_1__.default)('.timer', '2020-12-31');
 (0,_modules_modal__WEBPACK_IMPORTED_MODULE_2__.default)();
+(0,_modules_slider__WEBPACK_IMPORTED_MODULE_3__.default)();
 
 /***/ })
 
