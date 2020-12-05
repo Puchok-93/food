@@ -2,6 +2,97 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./js/modules/calculate.js":
+/*!*********************************!*\
+  !*** ./js/modules/calculate.js ***!
+  \*********************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+function calculate() {
+    let result = document.querySelector('.calculating__result span');
+    let sex = 'female';
+    let height;
+    let weight;
+    let age;
+    let ratio = '1.375';
+
+    function calcResult() {
+        if (!sex || !height || !weight || !age || !ratio) {
+            result.textContent = '___'
+            return;
+        } 
+
+        if (sex == 'female') {
+            result.textContent = Math.round((447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)) * ratio);
+        } else {
+            result.textContent = Math.round((88.36 + (13.4 * weight) + (4.8 * height) - (5.7* age)) * ratio);
+        }
+    }
+
+    calcResult();
+
+    function getStaticInformation(parentSelector, activeClass) {
+        const elements = document.querySelectorAll(`${parentSelector} div`);
+
+        elements.forEach(element => {
+            element.addEventListener('click', (e) => {
+                if (e.target.getAttribute('data-ratio')) {
+                    ratio = +e.target.getAttribute('data-ratio');
+                } else {
+                    sex = e.target.getAttribute('id');
+                }
+
+                elements.forEach(element => {
+                    element.classList.remove(activeClass);
+                });
+
+                calcResult();
+
+                e.target.classList.add(activeClass);
+            });
+        });
+    }
+
+    getStaticInformation('#gender', 'calculating__choose-item_active');
+    getStaticInformation('.calculating__choose_big', 'calculating__choose-item_active');
+
+    function getDynamicInformation(selector) {
+        const input = document.querySelector(selector);
+
+        input.addEventListener('input', () => {
+            switch(input.getAttribute('id')) {
+                case 'height':
+                    height = +input.value;
+                    break;
+                case 'weight':
+                    weight = +input.value;
+                    break;
+                case 'age':
+                    age = +input.value;
+                    break;
+            }
+
+            calcResult();
+        });
+    }
+
+    getDynamicInformation('#height');
+    getDynamicInformation('#weight');
+    getDynamicInformation('#age');
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (calculate);
+
+/***/ }),
+
 /***/ "./js/modules/modal.js":
 /*!*****************************!*\
   !*** ./js/modules/modal.js ***!
@@ -180,7 +271,7 @@ function slider() {
         }
 
         dots.push(dot);
-    };
+    }
 
     dots.forEach(dot => {
         dot.addEventListener('click', (e) => {
@@ -354,6 +445,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_timer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/timer */ "./js/modules/timer.js");
 /* harmony import */ var _modules_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/modal */ "./js/modules/modal.js");
 /* harmony import */ var _modules_slider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/slider */ "./js/modules/slider.js");
+/* harmony import */ var _modules_calculate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/calculate */ "./js/modules/calculate.js");
+
 
 
 
@@ -363,6 +456,7 @@ __webpack_require__.r(__webpack_exports__);
 (0,_modules_timer__WEBPACK_IMPORTED_MODULE_1__.default)('.timer', '2020-12-31');
 (0,_modules_modal__WEBPACK_IMPORTED_MODULE_2__.default)();
 (0,_modules_slider__WEBPACK_IMPORTED_MODULE_3__.default)();
+(0,_modules_calculate__WEBPACK_IMPORTED_MODULE_4__.default)();
 
 /***/ })
 
