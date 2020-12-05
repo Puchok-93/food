@@ -95,7 +95,7 @@ function slider() {
         }
 
         dots.push(dot);
-    };
+    }
 
     dots.forEach(dot => {
         dot.addEventListener('click', (e) => {
